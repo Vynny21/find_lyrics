@@ -36,9 +36,11 @@ function doSubmit(){
 const html = document.querySelector("html");
 const checkbox = document.querySelector("input[name=theme]");
 
+
 //Pegar os estilos no css
 const getStyle = (element, style) => 
   window.getComputedStyle(element).getPropertyPriority(style)
+
 
 //Iniciar o estilo no style
 const initial_colors = {
@@ -60,8 +62,15 @@ const darkMode = {
 //e transformar tudo em letras minusculas
 const transformKey = key => "--" + key.replace(/([A-Z])/, "-$1").toLowerCase()
 
+
+const currentlyTheme = document.querySelector("html").value = localStorage.colors
+console.log(currentlyTheme)
+
+
 //Setar a cor na pagina html
 const changedColors = (colors) => {
+  localStorage.setItem('colors', colors)
+
   //Mapear o objeto de cores
   Object.keys(colors).map(key => 
       //Procurar a cor dentro do array colors recebido por parametro 
@@ -69,7 +78,18 @@ const changedColors = (colors) => {
     )
 }
 
+document.onchange = changedColors;
+
+/* if(localStorage.html) {
+  document.querySelector("html").value = localStorage.html
+} */
+
 //Ouvindo o evento de mudança da função
 checkbox.addEventListener("change", ({target}) => {
-  target.checked ? changedColors(darkMode) : changedColors(initial_colors)
+  if(target.checked === true) {
+    changedColors(darkMode)
+  } else {
+    changedColors(initial_colors)
+  }
+  
 })
